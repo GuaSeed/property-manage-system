@@ -1,0 +1,12 @@
+server:
+  port: 41600
+  servlet:
+    context-path: /v1/api
+
+spring:
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/pms?useSSL=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_USER:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ${MYSQL_PASSWORD:root}

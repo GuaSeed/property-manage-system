@@ -1,0 +1,4 @@
+GET http://localhost:41600/v1/api/user
+Accept: application/json
+
+###
