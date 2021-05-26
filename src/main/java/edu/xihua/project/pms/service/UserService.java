@@ -2,6 +2,9 @@ package edu.xihua.project.pms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import edu.xihua.project.pms.model.dataobject.User;
+import edu.xihua.project.pms.model.dto.UserDTO;
+import edu.xihua.project.pms.model.vo.Js2CodeSessionVO;
+import edu.xihua.project.pms.model.vo.MiniProgramUpdateUserInfo;
 
 /**
  * 用户操作相关接口
@@ -11,5 +14,8 @@ import edu.xihua.project.pms.model.dataobject.User;
  * @since 1.0
  */
 public interface UserService extends IService<User> {
+    boolean updateByOpenid(MiniProgramUpdateUserInfo updateUserInfo);
+
+    UserDTO getUserByOpenid(Js2CodeSessionVO js2CodeSessionVO);
 }
 

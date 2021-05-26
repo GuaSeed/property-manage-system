@@ -22,7 +22,7 @@ import java.util.Properties;
         @Signature(type = StatementHandler.class, method = "update", args = {Statement.class}),
         @Signature(type = StatementHandler.class, method = "batch", args = {Statement.class})
 })
-@Component
+//@Component
 public class SlowSqlInterceptor implements Interceptor {
     private static final Logger logger = LoggerFactory.getLogger(SlowSqlInterceptor.class);
 

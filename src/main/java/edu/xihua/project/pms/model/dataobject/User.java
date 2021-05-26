@@ -39,11 +39,26 @@ public class User implements Serializable {
     @TableLogic
     private Boolean deleted;
 
+    private String openid;
+
+    private String sessionKey;
+
+    private String avatarUrl;
+    private String city;
+    private String country;
+    private Integer gender;
+    private String language;
+    @TableField(value = "nickname")
+    private String nickName;
+    private String province;
+
     public static final String COL_ID = "id";
 
     public static final String COL_CREATED = "created";
 
     public static final String COL_MODIFIED = "modified";
+
+    public static final String COL_OPENID = "openid";
 
     public static final String COL_IS_DELETED = "is_deleted";
 }

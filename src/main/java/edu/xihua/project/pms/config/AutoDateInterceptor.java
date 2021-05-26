@@ -38,8 +38,8 @@ public class AutoDateInterceptor implements Interceptor {
         this.modifiedName = modifiedName;
     }
 
-    private String createdName;
-    private String modifiedName;
+    private String createdName = "created";
+    private String modifiedName = "modified";
 
     @Override
     public Object intercept(Invocation invocation) throws Exception {
@@ -91,7 +91,7 @@ public class AutoDateInterceptor implements Interceptor {
     public void setProperties(Properties properties) {
         String createdName = (String) properties.get("createdName");
         String modifiedName = (String) properties.get("modifiedName");
-        this.createdName = createdName;
-        this.modifiedName = modifiedName;
+//        this.createdName = createdName;
+//        this.modifiedName = modifiedName;
     }
 }
