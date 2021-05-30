@@ -1,0 +1,8 @@
+POST http://localhost:41600/v1/api/qrcode/checkQRCode
+Content-Type: application/json
+
+{
+  "qrcode": "mxmbwenodkdekfevllgxkwidvhbfnlpfcaxhrhyrqsjapubiddkjhmbfiixdypmw"
+}
+
+###

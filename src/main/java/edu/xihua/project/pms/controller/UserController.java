@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author intent <a>zzy.main@gmail.com</a>
  * @date 2021/5/22 3:02 下午
@@ -34,13 +36,13 @@ public class UserController {
     private RestTemplate restTemplate;
 
     @PostMapping("/miniprogram/login/{code}")
-    public ResponseEntity<?> miniProgramLoginIn(@PathVariable("code") String code) {
+    public ResponseEntity<?> miniProgramLoginIn(@PathVariable("code") String code, HttpServletRequest request) {
         // 先请求微信服务器
         String url = String.format(MiniProgramConst.JS_CODE2_SESSION_URL, appMiniProgramId, appMiniProgramSecret, code);
         String response = restTemplate.getForObject(url, String.class);
         Js2CodeSessionVO js2CodeSessionVO = new Gson().fromJson(response, Js2CodeSessionVO.class);
         if (StringUtils.isBlank(js2CodeSessionVO.getOpenid())) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body("获取openid错误");
         }
         // 这里就获取到openid了
         UserDTO user = userService.getUserByOpenid(js2CodeSessionVO);
@@ -48,7 +50,9 @@ public class UserController {
     }
 
     @PostMapping("/miniprogram/updateUserInfo")
-    public ResponseEntity<Boolean> miniProgramUpdateUserInfo(@RequestBody MiniProgramUpdateUserInfo updateUserInfo) {
+    public ResponseEntity<Boolean> miniProgramUpdateUserInfo(
+            HttpServletRequest request,
+            @RequestBody MiniProgramUpdateUserInfo updateUserInfo) {
         if (StringUtils.isBlank(updateUserInfo.getOpenid())) {
             ResponseEntity.badRequest().body(false);
         }

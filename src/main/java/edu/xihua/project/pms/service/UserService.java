@@ -17,5 +17,7 @@ public interface UserService extends IService<User> {
     boolean updateByOpenid(MiniProgramUpdateUserInfo updateUserInfo);
 
     UserDTO getUserByOpenid(Js2CodeSessionVO js2CodeSessionVO);
+
+    UserDTO getUserByOpenid(String openid);
 }
 

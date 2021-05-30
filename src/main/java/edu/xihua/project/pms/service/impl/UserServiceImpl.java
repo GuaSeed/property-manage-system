@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.xihua.project.pms.constant.RoleConst;
 import edu.xihua.project.pms.mapper.UserMapper;
 import edu.xihua.project.pms.mapper.UserRoleMapper;
+import edu.xihua.project.pms.model.dataobject.Card;
 import edu.xihua.project.pms.model.dataobject.User;
 import edu.xihua.project.pms.model.dataobject.UserRole;
 import edu.xihua.project.pms.model.dto.RoleDTO;
@@ -12,8 +13,10 @@ import edu.xihua.project.pms.model.dto.RolePermissionDTO;
 import edu.xihua.project.pms.model.dto.UserDTO;
 import edu.xihua.project.pms.model.vo.Js2CodeSessionVO;
 import edu.xihua.project.pms.model.vo.MiniProgramUpdateUserInfo;
+import edu.xihua.project.pms.service.CardService;
 import edu.xihua.project.pms.service.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private CardService cardService;
 
     @Override
     public boolean updateByOpenid(MiniProgramUpdateUserInfo updateUserInfo) {
@@ -59,8 +65,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 userRoleMapper.insert(userRole);
             }
         } else {
-            user.setSessionKey(js2CodeSessionVO.getSessionKey());
-            this.updateById(user);
+            if (StringUtils.isNoneBlank(js2CodeSessionVO.getSessionKey())) {
+                user.setSessionKey(js2CodeSessionVO.getSessionKey());
+                this.updateById(user);
+            }
         }
         // 根据用户id获取角色
         List<Map<String, Object>> roleByUserId = userRoleMapper.getRoleByUserId(user.getId());
@@ -87,7 +95,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }
             rolePermissionDTOList.add(rolePermissionDTO);
         }
-        return UserDTO.from(user, roleDTOMap);
+        Card card = cardService.getOne(new QueryWrapper<Card>()
+                .eq(Card.COL_USER_ID, user.getId())
+        );
+        return UserDTO.from(user, roleDTOMap, card);
+    }
+
+    @Override
+    public UserDTO getUserByOpenid(String openid) {
+        Js2CodeSessionVO js2CodeSessionVO = new Js2CodeSessionVO();
+        js2CodeSessionVO.setOpenid(openid);
+        return getUserByOpenid(js2CodeSessionVO);
     }
 
 

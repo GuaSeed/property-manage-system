@@ -51,6 +51,9 @@ public class User implements Serializable {
     @TableField(value = "nickname")
     private String nickName;
     private String province;
+    private String encryptedData;
+    private String iv;
+    private String signature;
 
     public static final String COL_ID = "id";
 

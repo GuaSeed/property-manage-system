@@ -12,6 +12,9 @@ import org.springframework.beans.BeanUtils;
 @Data
 public class MiniProgramUpdateUserInfo {
     private String openid;
+    private String encryptedData;
+    private String iv;
+    private String signature;
     private String avatarUrl;
     private String city;
     private String country;

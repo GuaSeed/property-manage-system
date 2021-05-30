@@ -7,4 +7,6 @@ package edu.xihua.project.pms.constant;
  */
 public class RoleConst {
     public static final int DEFAULT_ROLE_ID = 1;
+    public static final String DEFAULT_ROLE_ROME = "USER";
+    public static final String ADMIN_ROLE_ROME = "ADMIN";
 }
