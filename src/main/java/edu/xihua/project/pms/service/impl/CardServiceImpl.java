@@ -3,8 +3,11 @@ package edu.xihua.project.pms.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.xihua.project.pms.mapper.CardMapper;
 import edu.xihua.project.pms.model.dataobject.Card;
+import edu.xihua.project.pms.model.dto.CardListDTO;
 import edu.xihua.project.pms.service.CardService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author intent <a>zzy.main@gmail.com</a>
@@ -21,5 +24,10 @@ public class CardServiceImpl
             return false;
         }
         return baseMapper.deleteCardById(id) != 0;
+    }
+
+    @Override
+    public List<CardListDTO> getListByAvatar() {
+        return baseMapper.listByAvatar();
     }
 }

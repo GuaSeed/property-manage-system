@@ -3,7 +3,7 @@ package edu.xihua.project.pms.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import edu.xihua.project.pms.model.dataobject.Card;
 import edu.xihua.project.pms.model.dataobject.User;
-import edu.xihua.project.pms.model.dto.CardDTO;
+import edu.xihua.project.pms.model.dto.CardListDTO;
 import edu.xihua.project.pms.model.dto.UserDTO;
 import edu.xihua.project.pms.model.vo.AddCardVO;
 import edu.xihua.project.pms.model.vo.CardListVO;
@@ -74,8 +74,8 @@ public class CardController {
             return ResponseEntity.badRequest().body("权限错误");
         }
         // 返回所有卡
-        List<Card> list = cardService.list();
-        return ResponseEntity.ok(CardDTO.fromList(list));
+        List<CardListDTO> listByAvatar = cardService.getListByAvatar();
+        return ResponseEntity.ok(listByAvatar);
     }
 
     @PostMapping(value = "/bind")
